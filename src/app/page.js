@@ -1,101 +1,134 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
+import Modal from "./components/common/Modal";
+import LandingModal from "./components/landing/landingModal";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isOpen, setIsOpen] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const [isHueLoaded, setIsHueLoaded] = useState(false);
+  const [isFadedHueLoaded, setIsFadedHueLoaded] = useState(false);
+  const [isCenterLoaded, setIsCenterLoaded] = useState(false);
+
+  return (
+    <div className="flex justify-between flex-col">
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <LandingModal setIsOpen={setIsOpen} />
+      </Modal>
+      <main className="flex flex-col mt-28 md:mt-56">
+        <div className="flex md:mr-56 relative justify-center items-center flex-col">
+          <Image
+            className={`absolute z-40 mix-blend-multiply ${
+              isHueLoaded ? "opacity-100" : "opacity-0"
+            } transition-opacity duration-500`}
+            aria-hidden="true"
+            src="/images/hue.png"
+            alt="Abstract"
+            width={600}
+            height={600}
+            loading="lazy"
+            onLoad={() => setIsHueLoaded(true)}
+          />
+
+          <Image
+            className={`absolute z-0 brightness-200 blur-lg contrast-200 saturate-200 ${
+              isFadedHueLoaded ? "opacity-100" : "opacity-0"
+            } transition-opacity duration-500`}
+            aria-hidden="true"
+            src="/images/hue.png"
+            alt="Faded abstract"
+            width={130}
+            height={130}
+            loading="lazy"
+            onLoad={() => setIsFadedHueLoaded(true)}
+          />
+
+          <Image
+            className={`z-10 absolute ${
+              isCenterLoaded ? "opacity-100" : "opacity-0"
+            } transition-opacity duration-500`}
+            aria-hidden="true"
+            src="/images/center.png"
+            alt="Central"
+            width={750}
+            height={750}
+            loading="lazy"
+            onLoad={() => setIsCenterLoaded(true)}
+          />
+        </div>
+
+        <div className="flex flex-row items-end -mt-20 justify-around md:-ml-12 p-6 md:p-0">
+          <div className="flex flex-col space-y-6 mt-24 md:mt-0 z-40 mix-blend-difference">
+            <Image
+              className="animate-slideRight w-[250px] sm:w-[400px] lg:w-[500px]"
+              aria-hidden="true"
+              src="/images/immersive.png"
+              alt="Immersive"
+              width={500}
+              height={200}
+            />
+            <Image
+              className="md:ml-40 sm:ml-20 ml-10 animate-slideLeft w-[250px] sm:w-[400px] lg:w-[500px]"
+              aria-hidden="true"
+              src="/images/metauerse.png"
+              alt="MetaUrsE concept image"
+              width={500}
+              height={200}
+            />
+          </div>
+          <div className="relative">
+            <div className=" flex-col space-y-2 hidden md:flex">
+              <Image
+                className=""
+                aria-hidden="true"
+                src="/images/video.png"
+                alt="video"
+                width={340}
+                height={340}
+              />
+              <button
+                onClick={() => setIsOpen(true)}
+                className="hover:cursor-zoom-in"
+              >
+                <Image
+                  className="absolute top-[40%] right-[39%] animate-pulse"
+                  aria-hidden="true"
+                  src="/images/playButton.png"
+                  alt="MetaUrsE immersive concept image"
+                  width={80}
+                  height={80}
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="relative p-6 flex justify-center items-center w-full md:hidden">
+   
+          <Image
+            className=""
+            aria-hidden="true"
+            src="/images/video.png"
+            alt="video"
+            width={440}
+            height={440}
+          />
+          <button
+            onClick={() => setIsOpen(true)}
+            className="hover:cursor-zoom-in absolute animate-pulse"
           >
             <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              className=" "
+              aria-hidden="true"
+              src="/images/playButton.png"
+              alt="MetaUrsE immersive concept image"
+              width={80}
+              height={80}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </button>
+          
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }

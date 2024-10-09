@@ -11,7 +11,15 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+       fontFamily: {
+        sans: ['var(--font-poppins)']
+      },
+      animation: {
+        slideLeft: 'slideLeft 1s ease-out',
+        slideRight: 'slideRight 1s ease-out',
+      },
     },
   },
+  
   plugins: [],
 };
